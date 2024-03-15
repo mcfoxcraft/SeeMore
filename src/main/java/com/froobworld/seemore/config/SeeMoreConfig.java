@@ -2,6 +2,7 @@ package com.froobworld.seemore.config;
 
 import com.froobworld.nabconfiguration.*;
 import com.froobworld.nabconfiguration.annotations.Entry;
+import com.froobworld.nabconfiguration.annotations.Section;
 import com.froobworld.nabconfiguration.annotations.SectionMap;
 import com.froobworld.seemore.SeeMore;
 import org.bukkit.World;
@@ -9,7 +10,7 @@ import org.bukkit.World;
 import java.io.File;
 
 public class SeeMoreConfig extends NabConfiguration {
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
 
     public SeeMoreConfig(SeeMore seeMore) {
         super(
@@ -34,6 +35,21 @@ public class SeeMoreConfig extends NabConfiguration {
         @Entry(key = "maximum-view-distance")
         public final ConfigEntry<Integer> maximumViewDistance = ConfigEntries.integerEntry();
 
+    }
+    
+    @Section(key = "integration-settings")
+    public final IntegrationSettings integrationSettings = new IntegrationSettings();
+    
+    public static class IntegrationSettings extends ConfigSection {
+        
+        @Section(key = "essentials")
+        public final Essentials essentials = new Essentials();
+        
+        public static class Essentials extends ConfigSection {
+                
+            @Entry(key = "afk-view-distance")
+            public final ConfigEntry<Integer> afkViewDistance = ConfigEntries.integerEntry();
+        }
     }
 
 }

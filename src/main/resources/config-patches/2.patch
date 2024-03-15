@@ -1,0 +1,9 @@
+[add-section]
+key=integration-settings
+comment=# Settings for specific integrations. Only works with the corresponding plugin installed.
+[add-section]
+key=integration-settings.essentials
+[add-field]
+key=integration-settings.essentials.afk-view-distance
+value=4
+comment=# View distance that will be set for a player when they go AFK.\n# The AFK view distance will only be applied if the player's\n# view distance is higher than this value when they go AFK.\n# Note: Set to -1 to disable this feature.

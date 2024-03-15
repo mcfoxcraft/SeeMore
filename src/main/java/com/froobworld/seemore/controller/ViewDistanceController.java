@@ -26,7 +26,7 @@ public class ViewDistanceController {
         seeMore.getSchedulerHook().runRepeatingTask(this::cleanMaps, 1200, 1200);
         Bukkit.getPluginManager().registerEvents(new ViewDistanceUpdater(this), seeMore);
     }
-
+    
     public void updateAllPlayers() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             seeMore.getSchedulerHook().runEntityTaskAsap(() -> {

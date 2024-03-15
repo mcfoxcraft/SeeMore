@@ -3,18 +3,24 @@ package com.froobworld.seemore;
 import com.froobworld.seemore.command.SeeMoreCommand;
 import com.froobworld.seemore.config.SeeMoreConfig;
 import com.froobworld.seemore.controller.ViewDistanceController;
+import com.froobworld.seemore.integration.Integration;
+import com.froobworld.seemore.integration.list.EssentialsIntegration;
 import com.froobworld.seemore.metrics.SeeMoreMetrics;
 import com.froobworld.seemore.scheduler.BukkitSchedulerHook;
 import com.froobworld.seemore.scheduler.RegionisedSchedulerHook;
 import com.froobworld.seemore.scheduler.SchedulerHook;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeeMore extends JavaPlugin {
     private SeeMoreConfig config;
     private SchedulerHook schedulerHook;
     private ViewDistanceController viewDistanceController;
+    private List<Integration> integrations;
 
     @Override
     public void onEnable() {
@@ -38,6 +44,15 @@ public class SeeMore extends JavaPlugin {
         registerCommand();
 
         new SeeMoreMetrics(this);
+        
+        getLogger().info("Enabling integrations...");
+        integrations = new ArrayList<>(10);
+        
+        PluginManager pluginManager = this.getServer().getPluginManager();
+        if (pluginManager.isPluginEnabled("Essentials")) {
+            integrations.add(new EssentialsIntegration(this));
+            getLogger().info("Essentials found, integration enabled.");
+        }
     }
 
     @Override
@@ -70,5 +85,9 @@ public class SeeMore extends JavaPlugin {
 
     public SchedulerHook getSchedulerHook() {
         return schedulerHook;
+    }
+    
+    public ViewDistanceController getViewDistanceController() {
+        return viewDistanceController;
     }
 }

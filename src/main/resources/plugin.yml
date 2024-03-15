@@ -3,6 +3,7 @@ main: com.froobworld.seemore.SeeMore
 version: ${version}
 api-version: 1.17
 authors: [froobynooby]
+softdepend: [Essentials]
 description: Per-player view distance based on client settings.
 folia-supported: true
 
