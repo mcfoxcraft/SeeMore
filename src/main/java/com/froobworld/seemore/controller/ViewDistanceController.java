@@ -36,14 +36,19 @@ public class ViewDistanceController {
     }
 
     public void setTargetViewDistance(Player player, int clientViewDistance, boolean testDelay, boolean initialUpdate) {
-        int floor = player.getWorld().getSimulationDistance();
-        int ceiling = Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), 32);
+        setTargetViewDistance(player, clientViewDistance, testDelay, initialUpdate, false);
+    }
+
+    public void setTargetViewDistance(Player player, int clientViewDistance, boolean testDelay, boolean initialUpdate, boolean nowAfk) {
+        int ceiling = seeMore.getSeeMoreConfig().disabledWorlds.get().stream().anyMatch(s -> player.getWorld().getName().equals(s)) ?
+                32 : nowAfk && seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? 32 : Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), 32);
 
         // Default to the world's view distance if the configured ceiling is negative
         ceiling = ceiling < 0 ? player.getWorld().getViewDistance() : ceiling;
 
-        targetViewDistanceMap.put(player.getUniqueId(), Math.max(floor, Math.min(ceiling, clientViewDistance)));
-        targetSendDistanceMap.put(player.getUniqueId(), Math.max(2, Math.min(ceiling, clientViewDistance)) + 1);
+        int max = Math.max(2, Math.min(ceiling, clientViewDistance));
+        targetViewDistanceMap.put(player.getUniqueId(), max);
+        targetSendDistanceMap.put(player.getUniqueId(), max + 1);
 
         // Update the view distance with a delay if it is being lowered
         long delay = 0;

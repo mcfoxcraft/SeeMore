@@ -3,6 +3,10 @@
 # Please don't change this!
 version: 3
 
+# Disable view distance changes per world
+disabled-worlds:
+- world
+
 # The delay (in ticks) before a player's view distance is lowered after their client settings change.
 #  * This stops players overloading the server by constantly changing their view distance.
 update-delay: 600
@@ -18,6 +22,8 @@ world-settings:
     # The maximum view distance a player in this world can have.
     # Set to -1 to use the server's configured view distance for this world.
     maximum-view-distance: -1
+    # Disable view distance changes for inactive players
+    disable-for-afk-players: false
 
 # Settings for specific integrations. Only works with the corresponding plugin installed.
 integration-settings:

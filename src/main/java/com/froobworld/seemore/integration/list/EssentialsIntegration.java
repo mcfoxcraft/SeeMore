@@ -21,18 +21,12 @@ public class EssentialsIntegration implements Integration, Listener {
     public void onAfk(AfkStatusChangeEvent event) {
         Player player = event.getAffected().getBase();
         
-        int afkViewDistance = this.plugin.getSeeMoreConfig().integrationSettings.essentials.afkViewDistance.get();
+        int afkViewDistance = this.plugin.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? 32 : this.plugin.getSeeMoreConfig().integrationSettings.essentials.afkViewDistance.get();
         if (afkViewDistance == -1) {
             return;
         }
-        
+
         boolean nowAfk = event.getValue();
-        if (nowAfk) {
-            if (player.getViewDistance() > afkViewDistance) {
-                this.plugin.getViewDistanceController().setTargetViewDistance(player, afkViewDistance, false, false);
-            }
-        } else {
-            this.plugin.getViewDistanceController().setTargetViewDistance(player, player.getClientViewDistance(), false, false);
-        }
+        this.plugin.getViewDistanceController().setTargetViewDistance(player, player.getClientViewDistance(), false, false, nowAfk);
     }
 }

@@ -8,6 +8,7 @@ import com.froobworld.seemore.SeeMore;
 import org.bukkit.World;
 
 import java.io.File;
+import java.util.List;
 
 public class SeeMoreConfig extends NabConfiguration {
     private static final int VERSION = 3;
@@ -20,6 +21,9 @@ public class SeeMoreConfig extends NabConfiguration {
                 VERSION
         );
     }
+
+    @Entry(key = "disabled-worlds")
+    public final ConfigEntry<List<String>> disabledWorlds = ConfigEntries.stringListEntry();
 
     @Entry(key = "update-delay")
     public final ConfigEntry<Integer> updateDelay = ConfigEntries.integerEntry();
@@ -35,6 +39,8 @@ public class SeeMoreConfig extends NabConfiguration {
         @Entry(key = "maximum-view-distance")
         public final ConfigEntry<Integer> maximumViewDistance = ConfigEntries.integerEntry();
 
+        @Entry(key = "disable-for-afk-players")
+        public final ConfigEntry<Boolean> disableForAfkPlayers = new ConfigEntry<>();
     }
     
     @Section(key = "integration-settings")
