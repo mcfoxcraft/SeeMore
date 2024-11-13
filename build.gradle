@@ -16,6 +16,13 @@ repositories {
     maven {
         url 'https://repo.essentialsx.net/releases/'
     }
+    maven {
+        url = uri("https://maven.pkg.github.com/mcfoxcraft/nab-configuration")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
+        }
+    }
 }
 
 dependencies {
