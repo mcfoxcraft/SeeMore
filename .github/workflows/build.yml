@@ -42,5 +42,5 @@ jobs:
       - name: Archive SeeMore
         uses: actions/upload-artifact@v2
         with:
-          path: build/libs/*.jar
+          path: out/*.jar
           name: SeeMore

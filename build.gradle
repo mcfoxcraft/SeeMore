@@ -39,14 +39,18 @@ processResources {
 }
 
 shadowJar {
+    destinationDirectory.set(file('out'))
     archiveFileName = 'SeeMore-' + project.version.toString() + '.jar';
 
     relocate 'com.froobworld.nabconfiguration', 'com.froobworld.seemore.lib.nabconfiguration'
     relocate 'org.bstats','com.froobworld.seemore.lib.bstats'
 }
 
-artifacts {
-    shadowJar;
+tasks.register('copyToRunServer', Copy) {
+    from layout.projectDirectory.dir('out')
+    include '*.jar'
+    into file('run/plugins')
 }
 
-assemble.dependsOn(shadowJar);
+tasks.named("build").get().dependsOn(shadowJar)
+tasks.named("build").get().finalizedBy(tasks.named("copyToRunServer"))
