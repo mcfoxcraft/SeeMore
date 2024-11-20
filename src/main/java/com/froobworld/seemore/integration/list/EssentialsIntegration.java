@@ -3,6 +3,7 @@ package com.froobworld.seemore.integration.list;
 import com.froobworld.seemore.SeeMore;
 import com.froobworld.seemore.integration.Integration;
 import net.ess3.api.events.AfkStatusChangeEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,7 +22,7 @@ public class EssentialsIntegration implements Integration, Listener {
     public void onAfk(AfkStatusChangeEvent event) {
         Player player = event.getAffected().getBase();
         
-        int afkViewDistance = this.plugin.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? 32 : this.plugin.getSeeMoreConfig().integrationSettings.essentials.afkViewDistance.get();
+        int afkViewDistance = this.plugin.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? Bukkit.getServer().getViewDistance() : this.plugin.getSeeMoreConfig().integrationSettings.essentials.afkViewDistance.get();
         if (afkViewDistance == -1) {
             return;
         }

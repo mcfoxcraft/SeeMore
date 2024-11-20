@@ -41,7 +41,7 @@ public class ViewDistanceController {
 
     public void setTargetViewDistance(Player player, int clientViewDistance, boolean testDelay, boolean initialUpdate, boolean nowAfk) {
         int ceiling = seeMore.getSeeMoreConfig().disabledWorlds.get().stream().anyMatch(s -> player.getWorld().getName().equals(s)) ?
-                32 : nowAfk && seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? 32 : Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), 32);
+                Bukkit.getServer().getViewDistance() : nowAfk && seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).disableForAfkPlayers.get() ? Bukkit.getServer().getViewDistance() : Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), Bukkit.getServer().getViewDistance());
 
         // Default to the world's view distance if the configured ceiling is negative
         ceiling = ceiling < 0 ? player.getWorld().getViewDistance() : ceiling;
